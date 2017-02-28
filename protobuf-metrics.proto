@@ -1,0 +1,32 @@
+syntax = "proto3";
+package metser;
+
+enum ProtobufType {
+  UnknownType = 0;
+  CounterType = 1;
+  BatchTimerType = 2;
+  GaugeType = 3;
+}
+
+message ProtobufCounter {
+	bytes ID = 1;
+  int64 Value = 2;
+}
+
+message ProtobufBatchTimer {
+	bytes ID = 1;
+  repeated double Values = 2;
+}
+
+message ProtobufGauge {
+	bytes ID = 1;
+  double Value = 2;
+}
+
+message ProtobufMetricUnion {
+  ProtobufType Type = 1;
+  bytes ID = 2;
+  int64 CounterVal = 3;
+  repeated double BatchTimerVal = 4;
+  double GaugeVal = 5;
+}

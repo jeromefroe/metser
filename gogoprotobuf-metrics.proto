@@ -1,0 +1,38 @@
+syntax = "proto3";
+package metser;
+
+import "github.com/gogo/protobuf/gogoproto/gogo.proto";
+
+option (gogoproto.sizer_all) = true;
+option (gogoproto.marshaler_all) = true;
+option (gogoproto.unmarshaler_all) = true;
+
+enum GoGoProtobufType {
+  UnknownType = 0;
+  CounterType = 1;
+  BatchTimerType = 2;
+  GaugeType = 3;
+}
+
+message GoGoProtobufCounter {
+	bytes ID = 1;
+  int64 Value = 2;
+}
+
+message GoGoProtobufBatchTimer {
+	bytes ID = 1;
+  repeated double Values = 2;
+}
+
+message GoGoProtobufGauge {
+	bytes ID = 1;
+  double Value = 2;
+}
+
+message GoGoProtobufMetricUnion {
+  GoGoProtobufType Type = 1;
+  bytes ID = 2;
+  int64 CounterVal = 3;
+  repeated double BatchTimerVal = 4;
+  double GaugeVal = 5;
+}

@@ -1,0 +1,26 @@
+namespace flatbuffers;
+
+enum Type:byte { UnknownType, CounterType, BatchTimerType, GaugeType }
+
+table FlatBuffersCounter {
+	ID:[ubyte];
+	Value:long;
+}
+
+table FlatBuffersBatchTimer {
+	ID:[ubyte];
+	Values:[double];
+}
+
+table FlatBuffersGauge {
+	ID:[ubyte];
+	Value:double;
+}
+
+table FlatBuffersMetricUnion {
+	Type:Type;
+	ID:[ubyte];
+	CounterVal:long;
+	BatchTimerVal:[double];
+	GaugeVal:double;
+}

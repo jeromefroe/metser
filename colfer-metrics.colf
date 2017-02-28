@@ -1,0 +1,24 @@
+package colfer
+
+type Counter struct {
+ 	ID    binary
+ 	Value int64
+}
+
+type BatchTimer struct {
+	ID     binary
+	Values []float64
+}
+
+type Gauge struct {
+	ID    binary
+	Value float64
+}
+
+type MetricUnion struct {
+	Type          uint8
+	ID            binary
+	CounterVal    int64
+	BatchTimerVal []float64
+	GaugeVal      float64
+}

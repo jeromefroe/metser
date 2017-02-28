@@ -1,0 +1,22 @@
+struct GencodeCounter {
+  ID []byte
+  Value vint64
+}
+
+struct GencodeBatchTimer {
+	ID     []byte
+	Values []float64
+}
+
+struct GencodeGauge {
+	ID    []byte
+	Value float64
+}
+
+struct GencodeMetricUnion {
+	Type          int8
+	ID            []byte
+	CounterVal    int64
+	BatchTimerVal []float64
+	GaugeVal      float64
+}
