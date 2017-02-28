@@ -1,9 +1,9 @@
 # metser
 
 This repo hosts various benchmarks for serializing and deserializing metrics. It is intended to
-givea broad glimpse of the tradeoffs, for example serialization time vs the serialized data,
-between different serialization approaches. The structs I used to perform these benchmarks
-are shown below:
+give a broad glimpse of the tradeoffs, for example serialization time vs the size of serialized
+data, between different serialization approaches. The structs I used to perform these benchmarks
+can be seen below:
 
 ```
 type Type int8
@@ -40,40 +40,40 @@ definitions and serialization methods could be improved (for example, for
 gopkg.in/vmihailenco/msgpack.v2 one could use the type of the metric union to determine how the
 metric should be serialized so that one doesn't have to encode each metric field) however, as
 the point of this exercise was to only get the general picture of the landscape of
-serialization methods, I didn't perform any optimization special to a given technique.
+serialization methods, I didn't perform any optimizations special to a given technique.
 
 The serialization methods I looked at are:
 
- _ [gopkg.in/vmihailenco/msgpack.v2](https://github.com/vmihailenco/msgpack)
- _ [github.com/tinylib/msgp](https://github.com/tinylib/msgp)
- _ [github.com/ugorji/go/codec (messagepack)](https://github.com/ugorji/go/tree/master/codec)
- _ [github.com/google/flatbuffers/go](https://github.com/google/flatbuffers)
- _ [github.com/golang/protobuf](https://github.com/golang/protobuf)
- _ [github.com/gogo/protobuf](https://github.com/gogo/protobuf)
- _ [github.com/DeDiS/protobuf](https://github.com/DeDiS/protobuf)
- _ [zombiezen.com/go/capnproto2](https://godoc.org/zombiezen.com/go/capnproto2)
- _ [git.apache.org/thrift.git/lib/go/thrift](https://github.com/apache/thrift/tree/master/lib/go)
- _ [encoding/gob](https://golang.org/pkg/encoding/gob/)
- _ [encoding/json](https://golang.org/pkg/encoding/json/)
- _ [github.com/mailru/easyjson](https://github.com/mailru/easyjson)
- _ [labix.org/v2/mgo/bson](https://godoc.org/labix.org/v2/mgo/bson)
- _ [github.com/davecgh/go-xdr/xdr2](https://github.com/davecgh/go-xdr)
- _ [github.com/andyleap/gencode](https://github.com/andyleap/gencode)
- _ [github.com/pascaldekloe/colfer](https://github.com/pascaldekloe/colfer)
- _ [github.com/Sereal/Sereal/Go/sereal](https://github.com/Sereal/Sereal)
- _ [github.com/hprose/hprose-golang](https://github.com/hprose/hprose-golang)
+- [gopkg.in/vmihailenco/msgpack.v2](https://github.com/vmihailenco/msgpack)
+- [github.com/tinylib/msgp](https://github.com/tinylib/msgp)
+- [github.com/ugorji/go/codec (messagepack)](https://github.com/ugorji/go/tree/master/codec)
+- [github.com/google/flatbuffers/go](https://github.com/google/flatbuffers)
+- [github.com/golang/protobuf](https://github.com/golang/protobuf)
+- [github.com/gogo/protobuf](https://github.com/gogo/protobuf)
+- [github.com/DeDiS/protobuf](https://github.com/DeDiS/protobuf)
+- [zombiezen.com/go/capnproto2](https://godoc.org/zombiezen.com/go/capnproto2)
+- [git.apache.org/thrift.git/lib/go/thrift](https://github.com/apache/thrift/tree/master/lib/go)
+- [encoding/gob](https://golang.org/pkg/encoding/gob/)
+- [encoding/json](https://golang.org/pkg/encoding/json/)
+- [github.com/mailru/easyjson](https://github.com/mailru/easyjson)
+- [labix.org/v2/mgo/bson](https://godoc.org/labix.org/v2/mgo/bson)
+- [github.com/davecgh/go-xdr/xdr2](https://github.com/davecgh/go-xdr)
+- [github.com/andyleap/gencode](https://github.com/andyleap/gencode)
+- [github.com/pascaldekloe/colfer](https://github.com/pascaldekloe/colfer)
+- [github.com/Sereal/Sereal/Go/sereal](https://github.com/Sereal/Sereal)
+- [github.com/hprose/hprose-golang](https://github.com/hprose/hprose-golang)
 
 This work was largely inspired by the work done
 [here](https://github.com/alecthomas/go_serialization_benchmarks) which also looked at serialization
-methods in Golang, so anyone interested in analyzing the tradeoffs between different
-serialization methods might like reading over the results there as well.
+methods in Go, so anyone interested in analyzing the tradeoffs between different serialization
+methods might like reading over the results there as well.
 
 ### Marshal with Buffer
 
 These first benchmarks look at the time it takes to marshal the different metrics into byte
-slices. These libraries offer the ability to pass the underlying byte slice to the Marshal
+slices. These libraries offer the ability to pass the underlying byte slice to the `Marshal`
 method. I decided to seperate these out since they allow one to pool these byte slice across
-calls to Marshal thereby saving allocations and reducing GC.
+calls to `Marshal` thereby saving allocations and reducing GC.
 
 ```
 BenchmarkVmihailencoMsgpackMarshalWithBufferCounter-4           20000000                70.1 ns/op
@@ -117,8 +117,8 @@ BenchmarkColferMarshalWithBufferMetricUnion-4                   30000000        
 ### Marshal without buffer
 
 These benchmarks also look at Marshaling metrics but to level the playing field for serialization
-methods which don't expose the ability to pass Marshal a byte slice we allocate a new one each
-time we call Marshal for those methods which do take a byte slice as an argument.
+methods which don't expose the ability to pass `Marshal` a byte slice we allocate a new one each
+time we call `Marshal` for those methods which do take a byte slice as an argument.
 
 ```
 BenchmarkVmihailencoMsgpackMarshalWithoutBufferCounter-4         5000000               365 ns/op
@@ -196,7 +196,7 @@ BenchmarkHproselMarshalWithoutBufferMetricUnion-4                 300000        
 
 ### Unmarshal
 
-These benchmarks looks at the time it takes to Unmarshal a byte slice into a Metric.
+These benchmarks looks at the time it takes to `Unmarshal` a byte slice into a Metric.
 
 ```
 BenchmarkVmihailencoMsgpackUnmarshalCounter-4           10000000               167 ns/op
