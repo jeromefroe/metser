@@ -196,7 +196,7 @@ BenchmarkHproselMarshalWithoutBufferMetricUnion-4                 300000        
 
 ### Unmarshal
 
-These benchmarks looks at the time it takes to `Unmarshal` a byte slice into a Metric.
+These benchmarks look at the time it takes to `Unmarshal` a byte slice into a Metric.
 
 ```
 BenchmarkVmihailencoMsgpackUnmarshalCounter-4           10000000               167 ns/op
